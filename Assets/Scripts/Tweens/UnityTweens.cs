@@ -45,8 +45,6 @@ namespace UnityTween
     {
         [SerializeField] protected float _duration;
         [SerializeField] protected float _delay;
-        protected float _currentDuration;
-        protected float _elapsed;
         protected bool _isAnimating = false;
         protected int _isForward = 1; // 1 - forward, -1 - rewind
         protected bool _startFromCurrent = false;

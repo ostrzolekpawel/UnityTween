@@ -40,6 +40,18 @@ namespace UnityTween
             return this;
         }
 
+        /// <summary>
+        /// time in percent, between 0-1
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public UnityTweenCore SetElapsedTime(float t) // t, 0-1
+        {
+            t = Mathf.Clamp01(t);
+            _timer = t * _length;
+            return this;
+        }
+
         private void WrapMethods(WrapMode mode)
         {
             switch (mode)
