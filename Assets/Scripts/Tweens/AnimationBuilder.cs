@@ -8,6 +8,7 @@ namespace UnityTween
     public enum AnimationType
     {
         Translate,
+        RectTranslate,
         EulerRotation,
         Scale,
         QuaternionRotation,
@@ -102,6 +103,15 @@ namespace UnityTween
                     if (curveExist) tweenTranslate.SetEase(data.Curve);
                     else tweenTranslate.SetEase(data.Ease);
                     AddTween(tweenTranslate);
+                    break;
+                case AnimationType.RectTranslate: //
+                    if (data.Target.GetComponent<RectTransform>() == null) break;
+                    var tweenRectTranslate = new UnityTweenRectTranslate(data.Target.GetComponent<RectTransform>(), data.Vector, data.IsAdditive)
+                            .SetDelay(data.Delay)
+                            .SetDuration(data.Duration);
+                    if (curveExist) tweenRectTranslate.SetEase(data.Curve);
+                    else tweenRectTranslate.SetEase(data.Ease);
+                    AddTween(tweenRectTranslate);
                     break;
                 case AnimationType.EulerRotation: //
                     if (data.Target.transform == null) break;

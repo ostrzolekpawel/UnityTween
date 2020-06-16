@@ -369,4 +369,26 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.material.color;
         }
     }
+
+    public class UnityTweenRectTranslate : UnityTween<RectTransform, Vector3>
+    {
+        public UnityTweenRectTranslate(RectTransform transform, Vector3 endValue, bool isAdditive = false) : base()
+        {
+            _componentToAnimate = transform;
+            _from = transform.anchoredPosition;
+            _to = isAdditive ? _from + endValue : endValue;
+
+            OnEvaluate += (x) =>
+            {
+                _componentToAnimate.anchoredPosition = Vector3.Lerp(_from, _to, EaseMethod(x)); //
+            };
+
+            OnEvaluateComplete += (x) =>
+            {
+                _componentToAnimate.anchoredPosition = x;
+            };
+
+            ValueOnBegin += () => _componentToAnimate.anchoredPosition;
+        }
+    }
 }
