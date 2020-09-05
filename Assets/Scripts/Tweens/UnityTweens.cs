@@ -248,9 +248,9 @@ namespace UnityTween
         }
     }
 
-    public class UnityTweenTranslate : UnityTween<Transform, Vector3>
+    public class UnityTweenPosition : UnityTween<Transform, Vector3>
     {
-        public UnityTweenTranslate(Transform transform, Vector3 endValue, bool isAdditive = false) : base()
+        public UnityTweenPosition(Transform transform, Vector3 endValue, bool isAdditive = false) : base()
         {
             _componentToAnimate = transform;
             _from = transform.position;
@@ -370,9 +370,9 @@ namespace UnityTween
         }
     }
 
-    public class UnityTweenRectTranslate : UnityTween<RectTransform, Vector3>
+    public class UnityTweenAnchoredPosition : UnityTween<RectTransform, Vector3>
     {
-        public UnityTweenRectTranslate(RectTransform transform, Vector3 endValue, bool isAdditive = false) : base()
+        public UnityTweenAnchoredPosition(RectTransform transform, Vector3 endValue, bool isAdditive = false) : base()
         {
             _componentToAnimate = transform;
             _from = transform.anchoredPosition;
@@ -389,6 +389,28 @@ namespace UnityTween
             };
 
             ValueOnBegin += () => _componentToAnimate.anchoredPosition;
+        }
+    }
+
+    public class UnityTweenSizeDelta : UnityTween<RectTransform, Vector3>
+    {
+        public UnityTweenSizeDelta(RectTransform transform, Vector3 endValue, bool isAdditive = false) : base()
+        {
+            _componentToAnimate = transform;
+            _from = transform.sizeDelta;
+            _to = isAdditive ? _from + endValue : endValue;
+
+            OnEvaluate += (x) =>
+            {
+                _componentToAnimate.sizeDelta = Vector3.Lerp(_from, _to, EaseMethod(x)); //
+            };
+
+            OnEvaluateComplete += (x) =>
+            {
+                _componentToAnimate.sizeDelta = x;
+            };
+
+            ValueOnBegin += () => _componentToAnimate.sizeDelta;
         }
     }
 }

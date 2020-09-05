@@ -7,13 +7,14 @@ namespace UnityTween
 {
     public enum AnimationType
     {
-        Translate,
-        RectTranslate,
+        Position,
+        AnchoredPosition,
         EulerRotation,
         Scale,
         QuaternionRotation,
         ImageColor,
-        MaterialColor
+        MaterialColor,
+        SizeDelta
     }
 
     [Serializable]
@@ -95,18 +96,18 @@ namespace UnityTween
             bool curveExist = (data.Ease == Ease.Custom) && data.Curve.length >= 2;
             switch (data.Type)
             {
-                case AnimationType.Translate: //
+                case AnimationType.Position: //
                     if (data.Target.transform == null) break;
-                    var tweenTranslate = new UnityTweenTranslate(data.Target.transform, data.Vector, data.IsAdditive)
+                    var tweenTranslate = new UnityTweenPosition(data.Target.transform, data.Vector, data.IsAdditive)
                             .SetDelay(data.Delay)
                             .SetDuration(data.Duration);
                     if (curveExist) tweenTranslate.SetEase(data.Curve);
                     else tweenTranslate.SetEase(data.Ease);
                     AddTween(tweenTranslate);
                     break;
-                case AnimationType.RectTranslate: //
+                case AnimationType.AnchoredPosition: //
                     if (data.Target.GetComponent<RectTransform>() == null) break;
-                    var tweenRectTranslate = new UnityTweenRectTranslate(data.Target.GetComponent<RectTransform>(), data.Vector, data.IsAdditive)
+                    var tweenRectTranslate = new UnityTweenAnchoredPosition(data.Target.GetComponent<RectTransform>(), data.Vector, data.IsAdditive)
                             .SetDelay(data.Delay)
                             .SetDuration(data.Duration);
                     if (curveExist) tweenRectTranslate.SetEase(data.Curve);
@@ -157,6 +158,15 @@ namespace UnityTween
                     if (curveExist) tweenMaterial.SetEase(data.Curve);
                     else tweenMaterial.SetEase(data.Ease);
                     AddTween(tweenMaterial);
+                    break;
+                case AnimationType.SizeDelta:
+                    if (data.Target.GetComponent<RectTransform>() == null) break;
+                    var tweenSizeDelta = new UnityTweenSizeDelta(data.Target.GetComponent<RectTransform>(), data.Vector, data.IsAdditive)
+                            .SetDelay(data.Delay)
+                            .SetDuration(data.Duration);
+                    if (curveExist) tweenSizeDelta.SetEase(data.Curve);
+                    else tweenSizeDelta.SetEase(data.Ease);
+                    AddTween(tweenSizeDelta);
                     break;
             }
         }

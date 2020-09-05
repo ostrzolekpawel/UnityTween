@@ -41,8 +41,9 @@ public class TweenDataDrawer : PropertyDrawer
             var type = (AnimationType)property.FindPropertyRelative("Type").intValue;
             if (type == AnimationType.EulerRotation ||
                     type == AnimationType.Scale ||
-                    type == AnimationType.Translate ||
-                    type == AnimationType.RectTranslate)
+                    type == AnimationType.Position ||
+                    type == AnimationType.AnchoredPosition ||
+                    type == AnimationType.SizeDelta)
             {
                 DrawField("Vector: ", position, height, property.FindPropertyRelative("Vector"));
             }
