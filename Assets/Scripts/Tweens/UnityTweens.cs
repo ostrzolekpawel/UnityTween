@@ -204,6 +204,14 @@ namespace UnityTween
             _to = to;
             return this;
         }
+
+        // use inverse lerp to get time 
+        public virtual float GetTime(V v)
+        {
+            return 0.0f;
+        }
+
+        public abstract V EvaluateValue(float t);
     }
 
     public abstract class UnityTween<T, V> : UnityTween<V> where T : UnityEngine.Object
@@ -268,6 +276,9 @@ namespace UnityTween
 
             ValueOnBegin += () => _componentToAnimate.position;
         }
+
+        public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
+        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
     }
 
     public class UnityTweenScale : UnityTween<Transform, Vector3>
@@ -288,6 +299,9 @@ namespace UnityTween
             };
             ValueOnBegin += () => _componentToAnimate.localScale;
         }
+
+        public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
+        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
     }
 
     public class UnityTweenRotateEuler : UnityTween<Transform, Vector3>
@@ -308,6 +322,9 @@ namespace UnityTween
             };
             ValueOnBegin += () => _componentToAnimate.eulerAngles;
         }
+
+        public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
+        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
     }
 
     public class UnityTweenRotateQuaternion : UnityTween<Transform, Quaternion>
@@ -328,6 +345,8 @@ namespace UnityTween
             };
             ValueOnBegin += () => _componentToAnimate.rotation;
         }
+
+        public override Quaternion EvaluateValue(float t) => Quaternion.Lerp(_from, _to, EaseMethod(t));
     }
 
     public class UnityTweenImageColor : UnityTween<Image, Color>
@@ -348,6 +367,8 @@ namespace UnityTween
             };
             ValueOnBegin += () => _componentToAnimate.color;
         }
+
+        public override Color EvaluateValue(float t) => Color.Lerp(_from, _to, EaseMethod(t));
     }
 
     public class UnityTweenMaterialColor : UnityTween<Renderer, Color>
@@ -368,6 +389,9 @@ namespace UnityTween
             };
             ValueOnBegin += () => _componentToAnimate.material.color;
         }
+
+        public override Color EvaluateValue(float t) => Color.Lerp(_from, _to, EaseMethod(t));
+        //public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
     }
 
     public class UnityTweenAnchoredPosition : UnityTween<RectTransform, Vector3>
@@ -390,6 +414,9 @@ namespace UnityTween
 
             ValueOnBegin += () => _componentToAnimate.anchoredPosition;
         }
+
+        public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
+        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
     }
 
     public class UnityTweenSizeDelta : UnityTween<RectTransform, Vector3>
@@ -412,5 +439,8 @@ namespace UnityTween
 
             ValueOnBegin += () => _componentToAnimate.sizeDelta;
         }
+
+        public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
+        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
     }
 }
