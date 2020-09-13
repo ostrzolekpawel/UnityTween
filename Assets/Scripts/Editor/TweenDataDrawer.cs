@@ -48,13 +48,18 @@ public class TweenDataDrawer : PropertyDrawer
                 DrawField("Vector: ", position, height, property.FindPropertyRelative("Vector"));
             }
             else if (type == AnimationType.ImageColor ||
-                        type == AnimationType.MaterialColor)
+                        type == AnimationType.MaterialColor ||
+                        type == AnimationType.TextColor)
             {
                 DrawField("Color: ", position, height, property.FindPropertyRelative("Color"));
             }
             else if (type == AnimationType.QuaternionRotation)
             {
                 DrawField("Quaternion: ", position, height, property.FindPropertyRelative("Quaternion"));
+            }
+            else if (type == AnimationType.TextSize)
+            {
+                DrawField("Number: ", position, height, property.FindPropertyRelative("Number"));
             }
             height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 

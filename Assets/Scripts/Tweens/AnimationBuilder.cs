@@ -14,7 +14,9 @@ namespace UnityTween
         QuaternionRotation,
         ImageColor,
         MaterialColor,
-        SizeDelta
+        SizeDelta,
+        TextColor,
+        TextSize
     }
 
     [Serializable]
@@ -28,6 +30,7 @@ namespace UnityTween
         public Vector3 Vector;
         public Quaternion Quaternion;
         public Color Color;
+        public float Number;
         public Ease Ease;
         public AnimationCurve Curve;
     }
@@ -167,6 +170,24 @@ namespace UnityTween
                     if (curveExist) tweenSizeDelta.SetEase(data.Curve);
                     else tweenSizeDelta.SetEase(data.Ease);
                     AddTween(tweenSizeDelta);
+                    break;
+                case AnimationType.TextColor:
+                    if (data.Target.GetComponent<TMPro.TMP_Text>() == null) break;
+                    var tweenTextColor = new UnityTweenTextColor(data.Target.GetComponent<TMPro.TMP_Text>(), data.Color, data.IsAdditive)
+                            .SetDelay(data.Delay)
+                            .SetDuration(data.Duration);
+                    if (curveExist) tweenTextColor.SetEase(data.Curve);
+                    else tweenTextColor.SetEase(data.Ease);
+                    AddTween(tweenTextColor);
+                    break;
+                case AnimationType.TextSize:
+                    if (data.Target.GetComponent<TMPro.TMP_Text>() == null) break;
+                    var tweenTextSize = new UnityTweenTextSize(data.Target.GetComponent<TMPro.TMP_Text>(), data.Number, data.IsAdditive)
+                            .SetDelay(data.Delay)
+                            .SetDuration(data.Duration);
+                    if (curveExist) tweenTextSize.SetEase(data.Curve);
+                    else tweenTextSize.SetEase(data.Ease);
+                    AddTween(tweenTextSize);
                     break;
             }
         }
