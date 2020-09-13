@@ -278,7 +278,7 @@ namespace UnityTween
         }
 
         public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
-        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
+        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to); // for now works only with linear
     }
 
     public class UnityTweenScale : UnityTween<Transform, Vector3>
@@ -301,7 +301,7 @@ namespace UnityTween
         }
 
         public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
-        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
+        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to); // for now works only with linear
     }
 
     public class UnityTweenRotateEuler : UnityTween<Transform, Vector3>
@@ -324,7 +324,7 @@ namespace UnityTween
         }
 
         public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
-        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
+        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to); // for now works only with linear
     }
 
     public class UnityTweenRotateQuaternion : UnityTween<Transform, Quaternion>
@@ -416,7 +416,7 @@ namespace UnityTween
         }
 
         public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
-        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
+        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to); // for now works only with linear
     }
 
     public class UnityTweenSizeDelta : UnityTween<RectTransform, Vector3>
@@ -429,7 +429,7 @@ namespace UnityTween
 
             OnEvaluate += (x) =>
             {
-                _componentToAnimate.sizeDelta = Vector3.Lerp(_from, _to, EaseMethod(x)); //
+                _componentToAnimate.sizeDelta = Vector3.Lerp(_from, _to, EaseMethod(x)); 
             };
 
             OnEvaluateComplete += (x) =>
@@ -441,6 +441,52 @@ namespace UnityTween
         }
 
         public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
-        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
+        public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to); // for now works only with linear
+    }
+
+    public class UnityTweenTextColor : UnityTween<TMPro.TMP_Text, Color>
+    {
+        public UnityTweenTextColor(TMPro.TMP_Text text, Color endValue, bool isAdditive = false) : base()
+        {
+            _componentToAnimate = text;
+            _from = _componentToAnimate.color;
+            _to = isAdditive ? _from + endValue : endValue;
+
+            OnEvaluate += (x) =>
+            {
+                _componentToAnimate.color = Color.Lerp(_from, _to, EaseMethod(x));
+            };
+            OnEvaluateComplete += (x) =>
+            {
+                _componentToAnimate.color = x;
+            };
+            ValueOnBegin += () => _componentToAnimate.color;
+        }
+
+        public override Color EvaluateValue(float t) => Color.Lerp(_from, _to, EaseMethod(t));
+        //public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
+    }
+
+    public class UnityTweenTextSize : UnityTween<TMPro.TMP_Text, float>
+    {
+        public UnityTweenTextSize(TMPro.TMP_Text text, float endValue, bool isAdditive = false) : base()
+        {
+            _componentToAnimate = text;
+            _from = _componentToAnimate.fontSize;
+            _to = isAdditive ? _from + endValue : endValue;
+
+            OnEvaluate += (x) =>
+            {
+                _componentToAnimate.fontSize = Mathf.Lerp(_from, _to, EaseMethod(x));
+            };
+            OnEvaluateComplete += (x) =>
+            {
+                _componentToAnimate.fontSize = x;
+            };
+            ValueOnBegin += () => _componentToAnimate.fontSize;
+        }
+
+        public override float EvaluateValue(float t) => Mathf.Lerp(_from, _to, EaseMethod(t));
+        //public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
     }
 }
