@@ -36,7 +36,7 @@ namespace UnityTween
     }
 
     [Serializable]
-    [ExecuteInEditMode]
+    //[ExecuteInEditMode]
     public class AnimationBuilder : MonoBehaviour // todo, moze zmienic nazwe na tweenbuilder
     {
         [SerializeField] [HideInInspector] private WrapMode _wrapMode;
@@ -59,7 +59,7 @@ namespace UnityTween
 
         public bool IsInit { get; set; } = false;
 
-        private void Start()
+        private void Awake()
         {
             if (LoadOnStart)
             {
@@ -93,7 +93,7 @@ namespace UnityTween
             _tweens.Add(tween);
         }
 
-        public void AddTween(TweenData data)
+        public void AddTween(TweenData data) // todo fabryka
         {
             if (data.Target == null) return;
             bool curveExist = (data.Ease == Ease.Custom) && data.Curve.length >= 2;
@@ -197,7 +197,7 @@ namespace UnityTween
             _tweenCore.SetForward().Play();
         }
 
-        public void PlayReverse()
+        public void PlayRewind()
         {
             _tweenCore.SetRewind().Play();
         }

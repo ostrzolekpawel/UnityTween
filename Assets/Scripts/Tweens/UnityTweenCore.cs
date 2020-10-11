@@ -8,7 +8,7 @@ namespace UnityTween
     [Serializable]
     public class UnityTweenCore
     {
-        [SerializeField][HideInInspector] private WrapMode _wrapMode = WrapMode.Default;
+        [SerializeField] [HideInInspector] private WrapMode _wrapMode = WrapMode.Default;
         private List<UnityTween> _tweens = new List<UnityTween>();
         private bool _isAnimating = false;
         private int _isForward = 1;
@@ -138,7 +138,7 @@ namespace UnityTween
             _isForward = -1;
             for (int i = 0; i < _tweens.Count; i++)
             {
-                _tweens[i].Reverse();
+                _tweens[i].Rewind();
             }
             return this;
         }
@@ -160,6 +160,15 @@ namespace UnityTween
             return this;
         }
 
+        public UnityTweenCore EvaluateValue(float t)
+        {
+            for (int i = 0; i < _tweens.Count; i++)
+            {
+                _tweens[i].EvaluateValue(t);
+            }
+            return this;
+        }
+
         public void Tick()
         {
             if (!_isAnimating) return;
@@ -173,14 +182,8 @@ namespace UnityTween
             float x = (_timer / _length);
             if (_endCondition(x))
             {
-                for (int i = 0; i < _tweens.Count; i++)
-                {
-                    _tweens[i].Tick(_timer);
-                }
-
                 onComplete?.Invoke(); // todo: czy oncomplete powiinien byc invokowany wtedy kiedy wrap jest na once, tzn konczy sie calkowicei animacja?
                 WrapMethods(_wrapMode);
-                //_isAnimating = false;
             }
         }
     }

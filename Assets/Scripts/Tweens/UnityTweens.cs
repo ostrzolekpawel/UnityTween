@@ -127,7 +127,7 @@ namespace UnityTween
             EndCondition = (x) => ((x) >= 1.0f);
             return this;
         }
-        public virtual UnityTween Reverse()
+        public virtual UnityTween Rewind()
         {
             _isForward = -1;
             EndCondition = (x) => ((x) < 0.0f);
@@ -146,6 +146,10 @@ namespace UnityTween
                 return _curve.Evaluate(t);
             return 0.0f;
         }
+
+        protected Action<float> OnEvaluate;
+        public void EvaluateValue(float t) =>
+            OnEvaluate?.Invoke(t);
 
         // raczej nie musza byc publiczne
         public static readonly Dictionary<Ease, Func<float, float>> EaseFunctions = new Dictionary<Ease, Func<float, float>>()
@@ -183,13 +187,12 @@ namespace UnityTween
             [Ease.OutSine] = MathfEx.EaseOutSine
         };
     }
-    
+
     public abstract class UnityTween<V> : UnityTween
     {
         protected V _from;
         protected V _to;
 
-        protected Action<float> OnEvaluate;
         protected Action<V> OnEvaluateComplete;
         protected Func<V> ValueOnBegin;
 
@@ -211,7 +214,7 @@ namespace UnityTween
             return 0.0f;
         }
 
-        public abstract V EvaluateValue(float t);
+        //public abstract V GetEvaluateValue(float t);
     }
 
     public abstract class UnityTween<T, V> : UnityTween<V> where T : UnityEngine.Object
@@ -277,7 +280,7 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.position;
         }
 
-        public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
+        //public override Vector3 GetEvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
         public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to); // for now works only with linear
     }
 
@@ -300,7 +303,7 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.localScale;
         }
 
-        public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
+        //public override Vector3 GetEvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
         public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to); // for now works only with linear
     }
 
@@ -323,7 +326,7 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.eulerAngles;
         }
 
-        public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
+        //public override Vector3 GetEvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
         public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to); // for now works only with linear
     }
 
@@ -346,7 +349,7 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.rotation;
         }
 
-        public override Quaternion EvaluateValue(float t) => Quaternion.Lerp(_from, _to, EaseMethod(t));
+        //public override Quaternion GetEvaluateValue(float t) => Quaternion.Lerp(_from, _to, EaseMethod(t));
     }
 
     public class UnityTweenImageColor : UnityTween<Image, Color>
@@ -368,7 +371,7 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.color;
         }
 
-        public override Color EvaluateValue(float t) => Color.Lerp(_from, _to, EaseMethod(t));
+        //public override Color GetEvaluateValue(float t) => Color.Lerp(_from, _to, EaseMethod(t));
     }
 
     public class UnityTweenMaterialColor : UnityTween<Renderer, Color>
@@ -390,7 +393,7 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.material.color;
         }
 
-        public override Color EvaluateValue(float t) => Color.Lerp(_from, _to, EaseMethod(t));
+        //public override Color GetEvaluateValue(float t) => Color.Lerp(_from, _to, EaseMethod(t));
         //public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
     }
 
@@ -415,7 +418,7 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.anchoredPosition;
         }
 
-        public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
+        //public override Vector3 GetEvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
         public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to); // for now works only with linear
     }
 
@@ -429,7 +432,7 @@ namespace UnityTween
 
             OnEvaluate += (x) =>
             {
-                _componentToAnimate.sizeDelta = Vector3.Lerp(_from, _to, EaseMethod(x)); 
+                _componentToAnimate.sizeDelta = Vector3.Lerp(_from, _to, EaseMethod(x));
             };
 
             OnEvaluateComplete += (x) =>
@@ -440,7 +443,7 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.sizeDelta;
         }
 
-        public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
+        //public override Vector3 GetEvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
         public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to); // for now works only with linear
     }
 
@@ -463,7 +466,7 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.color;
         }
 
-        public override Color EvaluateValue(float t) => Color.Lerp(_from, _to, EaseMethod(t));
+        //public override Color GetEvaluateValue(float t) => Color.Lerp(_from, _to, EaseMethod(t));
         //public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
     }
 
@@ -486,7 +489,7 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.fontSize;
         }
 
-        public override float EvaluateValue(float t) => Mathf.Lerp(_from, _to, EaseMethod(t));
+        //public override float GetEvaluateValue(float t) => Mathf.Lerp(_from, _to, EaseMethod(t));
         //public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
     }
 }
