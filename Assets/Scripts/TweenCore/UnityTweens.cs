@@ -112,6 +112,8 @@ namespace UnityTween
         }
 
         // raczej nie musza byc publiczne
+        protected Action<float> OnEvaluate;
+
         public static readonly Dictionary<Ease, Func<float, float>> EaseFunctions = new Dictionary<Ease, Func<float, float>>()
         {
             [Ease.Linear] = MathfEx.Linear,
@@ -153,7 +155,6 @@ namespace UnityTween
         protected V _from;
         protected V _to;
 
-        protected Action<float> OnEvaluate;
         protected Action<V> OnEvaluateComplete;
         protected Func<V> ValueOnBegin;
 

@@ -31,7 +31,7 @@ namespace UnityTween
 
         public bool IsInit { get; set; } = false;
 
-        private void Start()
+        private void Awake()
         {
             if (LoadOnStart)
             {
