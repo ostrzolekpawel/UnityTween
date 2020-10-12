@@ -20,7 +20,5 @@ namespace UnityTween
             };
             ValueOnBegin += () => _componentToAnimate.rotation;
         }
-
-        public override Quaternion EvaluateValue(float t) => Quaternion.Lerp(_from, _to, EaseMethod(t));
     }
 }

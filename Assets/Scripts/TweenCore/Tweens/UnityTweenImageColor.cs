@@ -21,7 +21,5 @@ namespace UnityTween
             };
             ValueOnBegin += () => _componentToAnimate.color;
         }
-
-        public override Color EvaluateValue(float t) => Color.Lerp(_from, _to, EaseMethod(t));
     }
 }

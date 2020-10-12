@@ -21,7 +21,5 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.material.color;
         }
 
-        public override Color EvaluateValue(float t) => Color.Lerp(_from, _to, EaseMethod(t));
-        //public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
     }
 }

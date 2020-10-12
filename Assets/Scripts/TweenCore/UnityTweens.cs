@@ -91,7 +91,7 @@ namespace UnityTween
             EndCondition = (x) => ((x) >= 1.0f);
             return this;
         }
-        public virtual UnityTween Reverse()
+        public virtual UnityTween Rewind()
         {
             _isForward = -1;
             EndCondition = (x) => ((x) < 0.0f);
@@ -111,8 +111,9 @@ namespace UnityTween
             return 0.0f;
         }
 
-        // raczej nie musza byc publiczne
         protected Action<float> OnEvaluate;
+        public void EvaluateValue(float t) =>
+            OnEvaluate?.Invoke(t);
 
         public static readonly Dictionary<Ease, Func<float, float>> EaseFunctions = new Dictionary<Ease, Func<float, float>>()
         {
@@ -149,7 +150,7 @@ namespace UnityTween
             [Ease.OutSine] = MathfEx.EaseOutSine
         };
     }
-    
+
     public abstract class UnityTween<V> : UnityTween
     {
         protected V _from;
@@ -176,7 +177,7 @@ namespace UnityTween
             return 0.0f;
         }
 
-        public abstract V EvaluateValue(float t);
+        //public abstract V EvaluateValue(float t);
     }
 
     public abstract class UnityTween<T, V> : UnityTween<V> where T : UnityEngine.Object

@@ -76,7 +76,7 @@ namespace UnityTween
             _tweenCore.SetForward().Play();
         }
 
-        public void PlayReverse()
+        public void PlayRewind()
         {
             _tweenCore.SetRewind().Play();
         }

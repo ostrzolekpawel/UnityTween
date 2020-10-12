@@ -23,7 +23,6 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.anchoredPosition;
         }
 
-        public override Vector3 EvaluateValue(float t) => Vector3.Lerp(_from, _to, EaseMethod(t));
         public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to); // for now works only with linear
     }
 }

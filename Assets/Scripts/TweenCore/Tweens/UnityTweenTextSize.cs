@@ -21,7 +21,5 @@ namespace UnityTween
             ValueOnBegin += () => _componentToAnimate.fontSize;
         }
 
-        public override float EvaluateValue(float t) => Mathf.Lerp(_from, _to, EaseMethod(t));
-        //public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to);
     }
 }
