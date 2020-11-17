@@ -2,7 +2,7 @@
 
 namespace UnityTween
 {
-    public class UnityTweenRotateEuler : UnityTween<Transform, Vector3>
+    public class UnityTweenRotateEuler : Tween<Transform, Vector3>
     {
         public UnityTweenRotateEuler(Transform transform, Vector3 endValue, bool isAdditive = false) : base()
         {

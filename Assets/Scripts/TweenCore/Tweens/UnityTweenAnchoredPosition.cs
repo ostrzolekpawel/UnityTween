@@ -2,7 +2,7 @@
 
 namespace UnityTween
 {
-    public class UnityTweenAnchoredPosition : UnityTween<RectTransform, Vector3>
+    public class UnityTweenAnchoredPosition : Tween<RectTransform, Vector3>
     {
         public UnityTweenAnchoredPosition(RectTransform transform, Vector3 endValue, bool isAdditive = false) : base()
         {

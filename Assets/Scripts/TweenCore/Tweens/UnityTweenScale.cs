@@ -2,7 +2,7 @@
 
 namespace UnityTween
 {
-    public class UnityTweenScale : UnityTween<Transform, Vector3>
+    public class UnityTweenScale : Tween<Transform, Vector3>
     {
         public UnityTweenScale(Transform transform, Vector3 endValue, bool isAdditive = false) : base()
         {

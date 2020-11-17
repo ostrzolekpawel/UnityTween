@@ -5,7 +5,7 @@ namespace UnityTween
     /// <summary>
     /// this tween can't be created in AnimationBuilder
     /// </summary>
-    public class UnityTweenUnknown : UnityTween
+    public class UnityTweenUnknown : Tween
     {
         public UnityTweenUnknown(Action<float> evaluateMethod, Action completeMethod)
         {

@@ -2,7 +2,7 @@
 
 namespace UnityTween
 {
-    public class UnityTweenTextSize : UnityTween<TMPro.TMP_Text, float>
+    public class UnityTweenTextSize : Tween<TMPro.TMP_Text, float>
     {
         public UnityTweenTextSize(TMPro.TMP_Text text, float endValue, bool isAdditive = false) : base()
         {

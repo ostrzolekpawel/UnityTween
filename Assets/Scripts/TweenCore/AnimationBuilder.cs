@@ -24,10 +24,10 @@ namespace UnityTween
         [SerializeField] [HideInInspector] public bool LoadOnStart = true;
 
         [SerializeField] private List<TweenData> _tweenDatas = new List<TweenData>();
-        private List<UnityTween> _tweens = new List<UnityTween>();
+        private List<Tween> _tweens = new List<Tween>();
 
-        private UnityTweenCore _tweenCore = null;
-        public UnityTweenCore TweenCore { get => _tweenCore; set => _tweenCore = value; }
+        private TweenCore _tweenCore = null;
+        public TweenCore TweenCore { get => _tweenCore; set => _tweenCore = value; }
 
         public bool IsInit { get; set; } = false;
 
@@ -43,7 +43,7 @@ namespace UnityTween
 
         public void LoadTweens()
         {
-            _tweenCore = new UnityTweenCore();
+            _tweenCore = new TweenCore();
             //_tweens.Clear();
             _tweenDatas.ForEach(x => AddTween(x));
 
@@ -60,7 +60,7 @@ namespace UnityTween
             IsInit = false; // chyba z automatu
         }
 
-        public void AddTween(UnityTween tween)
+        public void AddTween(Tween tween)
         {
             _tweens.Add(tween);
         }

@@ -2,7 +2,7 @@
 
 namespace UnityTween
 {
-    public class UnityTweenSizeDelta : UnityTween<RectTransform, Vector3>
+    public class UnityTweenSizeDelta : Tween<RectTransform, Vector3>
     {
         public UnityTweenSizeDelta(RectTransform transform, Vector3 endValue, bool isAdditive = false) : base()
         {

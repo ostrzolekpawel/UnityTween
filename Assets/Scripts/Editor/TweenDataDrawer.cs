@@ -96,8 +96,8 @@ public class TweenDataDrawer : PropertyDrawer
     {
         var curve = new AnimationCurve();
 
-        if (UnityTween.UnityTween.EaseFunctions.ContainsKey(ease))
-            CurveFunction = UnityTween.UnityTween.EaseFunctions[ease];
+        if (UnityTween.Tween.EaseFunctions.ContainsKey(ease))
+            CurveFunction = UnityTween.Tween.EaseFunctions[ease];
         else
             return curve;
 

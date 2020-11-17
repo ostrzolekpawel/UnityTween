@@ -2,7 +2,7 @@
 
 namespace UnityTween
 {
-    public class UnityTweenRotateQuaternion : UnityTween<Transform, Quaternion>
+    public class UnityTweenRotateQuaternion : Tween<Transform, Quaternion>
     {
         public UnityTweenRotateQuaternion(Transform transform, Quaternion endValue, bool isAdditive = false) : base()
         {

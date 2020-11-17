@@ -2,7 +2,7 @@
 
 namespace UnityTween
 {
-    public class UnityTweenTextColor : UnityTween<TMPro.TMP_Text, Color>
+    public class UnityTweenTextColor : Tween<TMPro.TMP_Text, Color>
     {
         public UnityTweenTextColor(TMPro.TMP_Text text, Color endValue, bool isAdditive = false) : base()
         {

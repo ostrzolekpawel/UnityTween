@@ -2,7 +2,7 @@
 
 namespace UnityTween
 {
-    public class UnityTweenMaterialColor : UnityTween<Renderer, Color>
+    public class UnityTweenMaterialColor : Tween<Renderer, Color>
     {
         public UnityTweenMaterialColor(Renderer renderer, Color endValue, bool isAdditive = false) : base()
         {

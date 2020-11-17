@@ -21,7 +21,7 @@ namespace TweenCore.TweenFactory
             };
 
 
-        public static UnityTween.UnityTween CreateTween(AnimationType type, TweenData data)
+        public static UnityTween.Tween CreateTween(AnimationType type, TweenData data)
         {
             return _tweens[type].CreateTween(data);
         }

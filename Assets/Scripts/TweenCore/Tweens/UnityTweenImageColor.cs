@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace UnityTween
 {
-    public class UnityTweenImageColor : UnityTween<Image, Color>
+    public class UnityTweenImageColor : Tween<Image, Color>
     {
         public UnityTweenImageColor(Image image, Color endValue, bool isAdditive = false) : base()
         {

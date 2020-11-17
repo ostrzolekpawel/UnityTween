@@ -5,7 +5,7 @@ using UnityEngine;
 namespace UnityTween
 {
 
-    public abstract class UnityTween
+    public abstract class Tween
     {
         [SerializeField] protected float _duration;
         [SerializeField] protected float _delay;
@@ -24,22 +24,22 @@ namespace UnityTween
         protected Func<float, bool> EndCondition;
         protected Func<float, float> EaseMethod = null;
 
-        public virtual UnityTween OnUpdate(Action a)
+        public virtual Tween OnUpdate(Action a)
         {
             onUpdate += a;
             return this;
         }
-        public virtual UnityTween OnComplete(Action a)
+        public virtual Tween OnComplete(Action a)
         {
             onComplete += a;
             return this;
         }
-        public virtual UnityTween OnPause(Action a)
+        public virtual Tween OnPause(Action a)
         {
             onPause += a;
             return this;
         }
-        public virtual UnityTween OnPlay(Action a)
+        public virtual Tween OnPlay(Action a)
         {
             onPlay += a;
             return this;
@@ -47,12 +47,12 @@ namespace UnityTween
 
         public abstract void Tick(float timeStep);
 
-        public virtual UnityTween SetDuration(float duration)
+        public virtual Tween SetDuration(float duration)
         {
             _duration = duration;
             return this;
         }
-        public virtual UnityTween SetDelay(float delay)
+        public virtual Tween SetDelay(float delay)
         {
             _delay = delay;
             return this;
@@ -60,45 +60,45 @@ namespace UnityTween
         public float GetDuration() => _duration;
         public float GetDelay() => _delay;
 
-        public virtual UnityTween SetEase(Ease ease)
+        public virtual Tween SetEase(Ease ease)
         {
             _ease = ease;
             EaseMethod = EaseFunctions[_ease];
             return this;
         }
-        public virtual UnityTween SetEase(AnimationCurve curve)
+        public virtual Tween SetEase(AnimationCurve curve)
         {
             _ease = Ease.Custom;
             _curve = curve;
             EaseMethod = EvaluateAnimationCurve;
             return this;
         }
-        public virtual UnityTween Stop()
+        public virtual Tween Stop()
         {
             _isAnimating = false;
             onPause?.Invoke();
             return this;
         }
-        public virtual UnityTween Play()
+        public virtual Tween Play()
         {
             _isAnimating = true;
             onPlay?.Invoke();
             return this;
         }
-        public virtual UnityTween Forward()
+        public virtual Tween Forward()
         {
             _isForward = 1;
             EndCondition = (x) => ((x) >= 1.0f);
             return this;
         }
-        public virtual UnityTween Rewind()
+        public virtual Tween Rewind()
         {
             _isForward = -1;
             EndCondition = (x) => ((x) < 0.0f);
             return this;
         }
 
-        public virtual UnityTween StartFromCurrent(bool b)
+        public virtual Tween StartFromCurrent(bool b)
         {
             _startFromCurrent = b;
             return this;
@@ -151,7 +151,7 @@ namespace UnityTween
         };
     }
 
-    public abstract class UnityTween<V> : UnityTween
+    public abstract class Tween<V> : Tween
     {
         protected V _from;
         protected V _to;
@@ -159,13 +159,13 @@ namespace UnityTween
         protected Action<V> OnEvaluateComplete;
         protected Func<V> ValueOnBegin;
 
-        public virtual UnityTween<V> SetFrom(V from)
+        public virtual Tween<V> SetFrom(V from)
         {
             _from = from;
             return this;
         }
 
-        public virtual UnityTween<V> SetTo(V to)
+        public virtual Tween<V> SetTo(V to)
         {
             _to = to;
             return this;
@@ -180,17 +180,17 @@ namespace UnityTween
         //public abstract V EvaluateValue(float t);
     }
 
-    public abstract class UnityTween<T, V> : UnityTween<V> where T : UnityEngine.Object
+    public abstract class Tween<T, V> : Tween<V> where T : UnityEngine.Object
     {
         protected T _componentToAnimate; // wstapnie niech bedzie tylko component
 
-        public UnityTween()
+        public Tween()
         {
             _ease = Ease.Linear;
             EaseMethod = EaseFunctions[_ease];
         }
 
-        public virtual UnityTween<T, V> SetComponent(T t)
+        public virtual Tween<T, V> SetComponent(T t)
         {
             _componentToAnimate = t;
             return this;

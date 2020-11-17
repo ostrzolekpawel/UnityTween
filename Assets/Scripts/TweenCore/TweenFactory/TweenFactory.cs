@@ -4,11 +4,11 @@ namespace TweenCore.TweenFactory
 {
     public interface ITweenFactory
     {
-        UnityTween.UnityTween CreateTween(TweenData data);
+        UnityTween.Tween CreateTween(TweenData data);
     }
 
     public abstract class TweenFactory : ITweenFactory
     {
-        public abstract UnityTween.UnityTween CreateTween(TweenData data);
+        public abstract UnityTween.Tween CreateTween(TweenData data);
     }
 }

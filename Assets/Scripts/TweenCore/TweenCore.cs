@@ -6,10 +6,10 @@ namespace UnityTween
 {
     // moze tutaj powienien byc glowny kontroler czy play czy rewind?
     [Serializable]
-    public class UnityTweenCore
+    public class TweenCore
     {
         [SerializeField] [HideInInspector] private WrapMode _wrapMode = WrapMode.Default;
-        private List<UnityTween> _tweens = new List<UnityTween>();
+        private List<Tween> _tweens = new List<Tween>();
         private bool _isAnimating = false;
         private int _isForward = 1;
         private float _timer = 0.0f;
@@ -19,22 +19,22 @@ namespace UnityTween
         protected Action onPause = null;
         protected Action onPlay = null;
         protected Action onRewind = null;
-        public virtual UnityTweenCore OnUpdate(Action a)
+        public virtual TweenCore OnUpdate(Action a)
         {
             onUpdate += a;
             return this;
         }
-        public virtual UnityTweenCore OnComplete(Action a)
+        public virtual TweenCore OnComplete(Action a)
         {
             onComplete += a;
             return this;
         }
-        public virtual UnityTweenCore OnPause(Action a)
+        public virtual TweenCore OnPause(Action a)
         {
             onPause += a;
             return this;
         }
-        public virtual UnityTweenCore OnPlay(Action a)
+        public virtual TweenCore OnPlay(Action a)
         {
             onPlay += a;
             return this;
@@ -45,7 +45,7 @@ namespace UnityTween
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public UnityTweenCore SetElapsedTime(float t) // t, 0-1
+        public TweenCore SetElapsedTime(float t) // t, 0-1
         {
             t = Mathf.Clamp01(t);
             _timer = t * _length;
@@ -75,12 +75,12 @@ namespace UnityTween
 
         private Func<float, bool> _endCondition;
 
-        public UnityTweenCore()
+        public TweenCore()
         {
             _endCondition = (x) => ((x) >= 1.0f);
         }
 
-        public UnityTweenCore Append(UnityTween tween)
+        public TweenCore Append(Tween tween)
         {
             _tweens.Add(tween);
             var tweenLength = tween.GetDuration() + tween.GetDelay();
@@ -88,7 +88,7 @@ namespace UnityTween
             return this;
         }
 
-        public UnityTweenCore Remove(int index)
+        public TweenCore Remove(int index)
         {
             if (index > 0 && index < _tweens.Count)
             {
@@ -108,7 +108,7 @@ namespace UnityTween
             return this;
         }
 
-        public UnityTweenCore Play()
+        public TweenCore Play()
         {
             _isAnimating = true;
             onPlay?.Invoke();
@@ -119,7 +119,7 @@ namespace UnityTween
             return this;
         }
 
-        public UnityTweenCore SetForward()
+        public TweenCore SetForward()
         {
             _isAnimating = true;
             _endCondition = (x) => ((x) >= 1.0f);
@@ -131,7 +131,7 @@ namespace UnityTween
             return this;
         }
 
-        public UnityTweenCore SetRewind()
+        public TweenCore SetRewind()
         {
             _isAnimating = true;
             _endCondition = (x) => ((x) < 0.0f);
@@ -143,7 +143,7 @@ namespace UnityTween
             return this;
         }
 
-        public UnityTweenCore Pause()
+        public TweenCore Pause()
         {
             _isAnimating = false;
             onPause?.Invoke();
@@ -154,13 +154,13 @@ namespace UnityTween
             return this;
         }
 
-        public UnityTweenCore SetWrap(WrapMode wrapMode)
+        public TweenCore SetWrap(WrapMode wrapMode)
         {
             _wrapMode = wrapMode;
             return this;
         }
 
-        public UnityTweenCore EvaluateValue(float t)
+        public TweenCore EvaluateValue(float t)
         {
             for (int i = 0; i < _tweens.Count; i++)
             {
