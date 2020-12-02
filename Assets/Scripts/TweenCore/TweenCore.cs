@@ -88,7 +88,7 @@ namespace UnityTween
             return this;
         }
 
-        public TweenCore Remove(int index)
+        public TweenCore RemoveAt(int index)
         {
             if (index > 0 && index < _tweens.Count)
             {
@@ -104,6 +104,16 @@ namespace UnityTween
                     tweenLength = _tweens[i].GetDuration() + _tweens[i].GetDelay();
                     _length = tweenLength > _length ? tweenLength : _length;
                 }
+            }
+            return this;
+        }
+
+        public TweenCore Remove(Tween tweenToRemove)
+        {
+            if (_tweens.Contains(tweenToRemove))
+            {
+                int idx = _tweens.FindIndex(x => x == tweenToRemove);
+                RemoveAt(idx);
             }
             return this;
         }
