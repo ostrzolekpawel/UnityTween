@@ -87,18 +87,23 @@ namespace UnityTween
             _length = tweenLength > _length ? tweenLength : _length;
             return this;
         }
+        public int TweenCount() =>
+            _tweens.Count;
 
         public TweenCore RemoveAt(int index)
         {
-            if (index > 0 && index < _tweens.Count)
+            if (index >= 0 && index < _tweens.Count)
             {
                 var tweenLength = _tweens[index].GetDuration() + _tweens[index].GetDelay();
-                var findNewLength = true;
-                if (_length > tweenLength)
-                    findNewLength = false;
-
                 _tweens.RemoveAt(index);
+
+                var findNewLength = false;
+                if (tweenLength >= _length || TweenCount() == 0)
+                    findNewLength = true;
+
                 if (!findNewLength) return this;
+
+                _length = 0.0f;
                 for (int i = 0; i < _tweens.Count; i++)
                 {
                     tweenLength = _tweens[i].GetDuration() + _tweens[i].GetDelay();
