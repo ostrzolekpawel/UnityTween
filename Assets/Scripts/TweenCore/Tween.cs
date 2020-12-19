@@ -22,7 +22,12 @@ namespace UnityTween
         protected Action onRewind = null;
 
         protected Func<float, bool> EndCondition;
-        protected Func<float, float> EaseMethod = null;
+        protected Func<float, float> CurrentEaseMethod = null;
+        protected Func<float, float> EaseForwardMethod = null;
+        protected Func<float, float> EaseRewindMethod = null;
+
+        public abstract Tween SetFrom(object from);
+        public abstract Tween SetTo(object to);
 
         public virtual Tween OnUpdate(Action a)
         {
@@ -60,19 +65,34 @@ namespace UnityTween
         public float GetDuration() => _duration;
         public float GetDelay() => _delay;
 
-        public virtual Tween SetEase(Ease ease)
+        public virtual Tween SetForwardEase(Ease ease)
         {
             _ease = ease;
-            EaseMethod = EaseFunctions[_ease];
+            EaseForwardMethod = EaseFunctions[_ease];
             return this;
         }
-        public virtual Tween SetEase(AnimationCurve curve)
+        public virtual Tween SetForwardEase(AnimationCurve curve)
         {
             _ease = Ease.Custom;
             _curve = curve;
-            EaseMethod = EvaluateAnimationCurve;
+            EaseForwardMethod = EvaluateAnimationCurve;
             return this;
         }
+
+        public virtual Tween SetRewindEase(Ease ease)
+        {
+            _ease = ease;
+            EaseRewindMethod = EaseFunctions[_ease];
+            return this;
+        }
+        public virtual Tween SetRewindEase(AnimationCurve curve)
+        {
+            _ease = Ease.Custom;
+            _curve = curve;
+            EaseRewindMethod = EvaluateAnimationCurve;
+            return this;
+        }
+
         public virtual Tween Stop()
         {
             _isAnimating = false;
@@ -88,12 +108,14 @@ namespace UnityTween
         public virtual Tween Forward()
         {
             _isForward = 1;
+            CurrentEaseMethod = EaseForwardMethod;
             EndCondition = (x) => ((x) >= 1.0f);
             return this;
         }
         public virtual Tween Rewind()
         {
             _isForward = -1;
+            CurrentEaseMethod = EaseRewindMethod;
             EndCondition = (x) => ((x) < 0.0f);
             return this;
         }
@@ -187,7 +209,7 @@ namespace UnityTween
         public Tween()
         {
             _ease = Ease.Linear;
-            EaseMethod = EaseFunctions[_ease];
+            CurrentEaseMethod = EaseForwardMethod = EaseFunctions[_ease];
         }
 
         public virtual Tween<T, V> SetComponent(T t)

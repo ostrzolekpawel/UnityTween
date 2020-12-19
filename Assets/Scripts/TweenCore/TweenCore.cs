@@ -82,6 +82,7 @@ namespace UnityTween
 
         public TweenCore Append(Tween tween)
         {
+            //TweenCoreManager.Instance.AddTweenCore(this); // because it can't be called from ctor
             _tweens.Add(tween);
             var tweenLength = tween.GetDuration() + tween.GetDelay();
             _length = tweenLength > _length ? tweenLength : _length;

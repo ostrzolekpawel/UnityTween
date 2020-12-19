@@ -12,7 +12,7 @@ namespace UnityTween
 
             OnEvaluate += (x) =>
             {
-                _componentToAnimate.eulerAngles = Vector3.Lerp(_from, _to, EaseMethod(x)); //
+                _componentToAnimate.eulerAngles = Vector3.Lerp(_from, _to, CurrentEaseMethod(x)); //
             };
             OnEvaluateComplete += (x) =>
             {
@@ -22,5 +22,19 @@ namespace UnityTween
         }
 
         public override float GetTime(Vector3 v) => v.InverseLerp(_from, _to); // for now works only with linear
+
+        public override Tween SetFrom(object from)
+        {
+            if (from is Vector3 vector)
+                _from = vector;
+            return this;
+        }
+
+        public override Tween SetTo(object to)
+        {
+            if (to is Vector3 vector)
+                _to = vector;
+            return this;
+        }
     }
 }

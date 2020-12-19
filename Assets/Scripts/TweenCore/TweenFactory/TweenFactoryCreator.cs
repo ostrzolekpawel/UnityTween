@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using UnityTween;
 
-namespace TweenCore.TweenFactory
+namespace UnityTween.TweenFactory
 {
     public static class TweenFactoryCreator
     {
@@ -21,7 +20,7 @@ namespace TweenCore.TweenFactory
             };
 
 
-        public static UnityTween.Tween CreateTween(AnimationType type, TweenData data)
+        public static Tween CreateTween(AnimationType type, TweenOptions data)
         {
             return _tweens[type].CreateTween(data);
         }

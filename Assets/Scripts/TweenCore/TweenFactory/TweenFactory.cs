@@ -1,14 +1,12 @@
-﻿using UnityTween;
-
-namespace TweenCore.TweenFactory
+﻿namespace UnityTween.TweenFactory
 {
     public interface ITweenFactory
     {
-        UnityTween.Tween CreateTween(TweenData data);
+        Tween CreateTween(TweenOptions data);
     }
 
     public abstract class TweenFactory : ITweenFactory
     {
-        public abstract UnityTween.Tween CreateTween(TweenData data);
+        public abstract Tween CreateTween(TweenOptions data);
     }
 }

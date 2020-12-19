@@ -7,13 +7,23 @@ namespace UnityTween
     /// </summary>
     public class UnityTweenUnknown : Tween
     {
-        public UnityTweenUnknown(Action<float> evaluateMethod, Action completeMethod)
+        public UnityTweenUnknown(Action<float> evaluateMethod, Action completeMethod) // todo add forward and rewind ease methods
         {
             _ease = Ease.Linear;
-            EaseMethod = EaseFunctions[_ease];
+            CurrentEaseMethod = EaseForwardMethod = EaseFunctions[_ease];
 
             OnEvaluate += evaluateMethod;
             onComplete += completeMethod;
+        }
+
+        public override Tween SetFrom(object from)
+        {
+            return this;
+        }
+
+        public override Tween SetTo(object to)
+        {
+            return this;
         }
 
         public override void Tick(float t)

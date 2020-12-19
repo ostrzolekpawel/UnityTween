@@ -1,15 +1,10 @@
 ﻿using UnityTween;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(TweenData))]
-public class TweenDataDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(TweenOptions))]
+public class TweenOptionsDrawer : PropertyDrawer
 {
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {

@@ -17,6 +17,9 @@ namespace UnityTween.Tests
                     .SetDuration(2.0f);
             tweenCore.Append(unknownTween);
             _builder.PlayForward();
+
+            UnityTweenPosition posTween = new UnityTweenPosition(transform, Vector3.one);
+            posTween.SetTo(Vector3.zero);
         }
 
         private void Fill(float t)

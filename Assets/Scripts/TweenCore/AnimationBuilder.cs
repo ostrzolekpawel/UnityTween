@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TweenCore.TweenFactory;
+using UnityTween.TweenFactory;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +23,7 @@ namespace UnityTween
         [SerializeField] [HideInInspector] public bool PlayOnStart;
         [SerializeField] [HideInInspector] public bool LoadOnStart = true;
 
-        [SerializeField] private List<TweenData> _tweenDatas = new List<TweenData>();
+        [SerializeField] private List<TweenOptions> _tweenDatas = new List<TweenOptions>();
         private List<Tween> _tweens = new List<Tween>();
 
         private TweenCore _tweenCore = null;
@@ -65,7 +65,7 @@ namespace UnityTween
             _tweens.Add(tween);
         }
 
-        public void AddTween(TweenData data)
+        public void AddTween(TweenOptions data)
         {
             var tween = TweenFactoryCreator.CreateTween(data.Type, data);
             AddTween(tween);
