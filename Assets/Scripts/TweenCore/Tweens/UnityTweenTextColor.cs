@@ -20,19 +20,5 @@ namespace UnityTween
             };
             ValueOnBegin += () => _componentToAnimate.color;
         }
-
-        public override Tween SetFrom(object from)
-        {
-            if (from is Color color)
-                _from = color;
-            return this;
-        }
-
-        public override Tween SetTo(object to)
-        {
-            if (to is Color color)
-                _to = color;
-            return this;
-        }
     }
 }

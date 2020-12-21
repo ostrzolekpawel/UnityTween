@@ -16,16 +16,6 @@ namespace UnityTween
             onComplete += completeMethod;
         }
 
-        public override Tween SetFrom(object from)
-        {
-            return this;
-        }
-
-        public override Tween SetTo(object to)
-        {
-            return this;
-        }
-
         public override void Tick(float t)
         {
             if (_isAnimating)

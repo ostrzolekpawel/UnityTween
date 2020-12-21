@@ -26,8 +26,8 @@ namespace UnityTween
         protected Func<float, float> EaseForwardMethod = null;
         protected Func<float, float> EaseRewindMethod = null;
 
-        public abstract Tween SetFrom(object from);
-        public abstract Tween SetTo(object to);
+        //public abstract Tween SetFrom(object from);
+        //public abstract Tween SetTo(object to);
 
         public virtual Tween OnUpdate(Action a)
         {
@@ -209,7 +209,9 @@ namespace UnityTween
         public Tween()
         {
             _ease = Ease.Linear;
-            CurrentEaseMethod = EaseForwardMethod = EaseFunctions[_ease];
+            EaseRewindMethod = EaseFunctions[_ease];
+            EaseForwardMethod = EaseFunctions[_ease];
+            CurrentEaseMethod = EaseForwardMethod;// EaseForwardMethod = EaseFunctions[_ease];
         }
 
         public virtual Tween<T, V> SetComponent(T t)

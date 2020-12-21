@@ -51,7 +51,7 @@ namespace UnityTween
             {
                 _tweenCore.Append(_tweens[i]);
             }
-            _tweenCore.SetWrap(WrapMode);
+            _tweenCore.SetWrap(WrapMode).SetForward();
             IsInit = true;
         }
 

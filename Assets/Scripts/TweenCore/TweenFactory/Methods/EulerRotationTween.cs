@@ -7,12 +7,16 @@
             if (data.Target.transform == null) return null;
             bool curveExist = (data.Ease == Ease.Custom) && data.Curve.length >= 2;
 
-            var tween = new UnityTweenRotateEuler(data.Target.transform, data.Vector, data.IsAdditive)
-                    .SetDelay(data.Delay)
-                    .SetDuration(data.Duration);
+            var tween = new UnityTweenRotateEuler(data.Target.transform, data.Vector.To, data.IsAdditive);
+            if (data.Vector.FromIsDifferentThanCurrent)
+                tween.SetFrom(data.Vector.From);
+
+            tween.SetDelay(data.Delay).SetDuration(data.Duration);
+
             if (curveExist) tween.SetForwardEase(data.Curve);
             else tween.SetForwardEase(data.Ease);
 
+            UnityEngine.Debug.LogError("asd");
             return tween;
         }
     }

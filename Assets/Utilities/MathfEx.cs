@@ -121,6 +121,7 @@ namespace UnityTween
         {
             var c1 = 1.70158f;
             var c3 = c1 + 1.0f;
+            UnityEngine.Debug.Log($"ease in back: {x}");
             return c3 * x * x * x - c1 * x * x;
         }
 

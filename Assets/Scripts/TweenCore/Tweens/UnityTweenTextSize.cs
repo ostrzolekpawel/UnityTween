@@ -20,19 +20,5 @@ namespace UnityTween
             };
             ValueOnBegin += () => _componentToAnimate.fontSize;
         }
-
-        public override Tween SetFrom(object from)
-        {
-            if (from is float number)
-                _from = number;
-            return this;
-        }
-
-        public override Tween SetTo(object to)
-        {
-            if (to is float number)
-                _to = number;
-            return this;
-        }
     }
 }

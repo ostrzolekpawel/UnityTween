@@ -20,13 +20,13 @@ public class TweenOptionsDrawer : PropertyDrawer
         {
             DrawField("Type: ", position, height, property.FindPropertyRelative("Type"));
             height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-            
+
             DrawField("Target: ", position, height, property.FindPropertyRelative("Target"));
             height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-            
+
             DrawField("Delay: ", position, height, property.FindPropertyRelative("Delay"));
             height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-            
+
             DrawField("Duration: ", position, height, property.FindPropertyRelative("Duration"));
             height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
@@ -34,29 +34,6 @@ public class TweenOptionsDrawer : PropertyDrawer
             height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
             var type = (AnimationType)property.FindPropertyRelative("Type").intValue;
-            if (type == AnimationType.EulerRotation ||
-                    type == AnimationType.Scale ||
-                    type == AnimationType.Position ||
-                    type == AnimationType.AnchoredPosition ||
-                    type == AnimationType.SizeDelta)
-            {
-                DrawField("Vector: ", position, height, property.FindPropertyRelative("Vector"));
-            }
-            else if (type == AnimationType.ImageColor ||
-                        type == AnimationType.MaterialColor ||
-                        type == AnimationType.TextColor)
-            {
-                DrawField("Color: ", position, height, property.FindPropertyRelative("Color"));
-            }
-            else if (type == AnimationType.QuaternionRotation)
-            {
-                DrawField("Quaternion: ", position, height, property.FindPropertyRelative("Quaternion"));
-            }
-            else if (type == AnimationType.TextSize)
-            {
-                DrawField("Number: ", position, height, property.FindPropertyRelative("Number"));
-            }
-            height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
             DrawField("Ease: ", position, height, property.FindPropertyRelative("Ease"));
             height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
@@ -72,8 +49,44 @@ public class TweenOptionsDrawer : PropertyDrawer
                 EditorGUI.LabelField(new Rect(position.x, position.y + height, labelWidth, EditorGUIUtility.singleLineHeight), "Curve: ");
                 EditorGUI.CurveField(new Rect(position.x + labelWidth, position.y + height, position.width - labelWidth, EditorGUIUtility.singleLineHeight), curve);
             }
+
+            height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+            if (IsVectorType(type))
+            {
+                DrawField("Vector: ", position, height, property.FindPropertyRelative("Vector"));
+
+            }
+            else if (IsColorType(type))
+            {
+                DrawField("Color: ", position, height, property.FindPropertyRelative("Color"));
+            }
+            else if (type == AnimationType.QuaternionRotation)
+            {
+                DrawField("Quaternion: ", position, height, property.FindPropertyRelative("Quaternion"));
+            }
+            else if (type == AnimationType.TextSize)
+            {
+                DrawField("Float: ", position, height, property.FindPropertyRelative("Float"));
+            }
+
         }
         EditorGUI.EndProperty();
+    }
+
+    private static bool IsColorType(AnimationType type)
+    {
+        return type == AnimationType.ImageColor ||
+                                type == AnimationType.MaterialColor ||
+                                type == AnimationType.TextColor;
+    }
+
+    private static bool IsVectorType(AnimationType type)
+    {
+        return type == AnimationType.EulerRotation ||
+                            type == AnimationType.Scale ||
+                            type == AnimationType.Position ||
+                            type == AnimationType.AnchoredPosition ||
+                            type == AnimationType.SizeDelta;
     }
 
     private void DrawField(string name, Rect position, float height, SerializedProperty serializedProperty)

@@ -20,19 +20,5 @@ namespace UnityTween
             };
             ValueOnBegin += () => _componentToAnimate.rotation;
         }
-
-        public override Tween SetFrom(object from)
-        {
-            if (from is Quaternion quaternion)
-                _from = quaternion;
-            return this;
-        }
-
-        public override Tween SetTo(object to)
-        {
-            if (to is Quaternion quaternion)
-                _to = quaternion;
-            return this;
-        }
     }
 }

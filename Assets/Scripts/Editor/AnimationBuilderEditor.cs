@@ -46,7 +46,8 @@ public class AnimationBuilderEditor : Editor
         float propertyHeight =
             EditorGUI.GetPropertyHeight(_list.serializedProperty.GetArrayElementAtIndex(index), true);
 
-        float spacing = EditorGUIUtility.singleLineHeight / 2;
+        //float spacing = EditorGUIUtility.singleLineHeight / 2;
+        float spacing = EditorGUIUtility.singleLineHeight * 3;
         return propertyHeight + spacing;
     }
 
