@@ -1,10 +1,10 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 using UnityTween;
 
-namespace Assets.Scripts.Editor
+namespace UnityTweenEditor
 {
-
     public class TweenDataDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -44,3 +44,5 @@ namespace Assets.Scripts.Editor
     [CustomPropertyDrawer(typeof(FloatTweenData))]
     public class AnyTweenData : TweenDataDrawer { }
 }
+
+#endif

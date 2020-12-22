@@ -16,7 +16,6 @@
             if (curveExist) tween.SetForwardEase(data.Curve);
             else tween.SetForwardEase(data.Ease);
 
-            UnityEngine.Debug.LogError("asd");
             return tween;
         }
     }
