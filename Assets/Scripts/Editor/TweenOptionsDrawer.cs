@@ -10,7 +10,7 @@ namespace UnityTweenEditor
     {
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return (20 - EditorGUIUtility.singleLineHeight) + (EditorGUIUtility.singleLineHeight * 9);
+            return (20 - EditorGUIUtility.singleLineHeight) + (EditorGUIUtility.singleLineHeight * 14); //9
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -70,6 +70,12 @@ namespace UnityTweenEditor
                 {
                     DrawField("Float: ", position, height, property.FindPropertyRelative("Float"));
                 }
+                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                //height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+
+                DrawField("Animation: ", position, height, property.FindPropertyRelative("Animation"));
 
             }
             EditorGUI.EndProperty();

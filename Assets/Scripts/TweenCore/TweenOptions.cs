@@ -12,20 +12,30 @@ namespace UnityTween
         public float Duration;
         public bool IsAdditive;
 
-        //public bool FromDifferentThanCurrent;
-
-        //public Vector3 Vector;
-        //public Quaternion Quaternion;
-        //public Color Color;
-        //public float Number;
-
         public Ease Ease;
-        public AnimationCurve Curve;
+        public AnimationCurve CurveForward;
+
+        public AnimationData Animation;
 
         public VectorTweenData Vector = new VectorTweenData();
         public QuaternionTweenData Quaternion = new QuaternionTweenData();
         public ColorTweenData Color = new ColorTweenData();
         public FloatTweenData Float = new FloatTweenData();
+    }
+
+    [Serializable]
+    public class AnimationOptions
+    {
+        public Ease Ease;
+        public AnimationCurve Curve;
+    }
+
+    [Serializable]
+    public class AnimationData
+    {
+        public AnimationOptions AnimationForward;
+        public bool RewindIsDifferent;
+        public AnimationOptions AnimationRewind;
     }
 
     [Serializable]

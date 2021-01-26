@@ -5,7 +5,7 @@ using UnityTween;
 
 namespace UnityTweenEditor
 {
-    public class TweenDataDrawer : PropertyDrawer
+    public class TweenDataPropertyDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -42,7 +42,7 @@ namespace UnityTweenEditor
     [CustomPropertyDrawer(typeof(QuaternionTweenData))]
     [CustomPropertyDrawer(typeof(ColorTweenData))]
     [CustomPropertyDrawer(typeof(FloatTweenData))]
-    public class AnyTweenData : TweenDataDrawer { }
+    public class AnyTweenDataDrawer : TweenDataPropertyDrawer { }
 }
 
 #endif
