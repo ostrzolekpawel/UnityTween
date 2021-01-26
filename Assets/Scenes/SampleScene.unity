@@ -567,12 +567,30 @@ MonoBehaviour:
     Duration: 2
     IsAdditive: 0
     Ease: 25
-    Curve:
+    CurveForward:
       serializedVersion: 2
       m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Animation:
+      AnimationForward:
+        Ease: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+      RewindIsDifferent: 0
+      AnimationRewind:
+        Ease: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
     Vector:
       FromIsDifferentThanCurrent: 0
       From: {x: 0, y: 0, z: 0}
@@ -595,14 +613,32 @@ MonoBehaviour:
     Duration: 2
     IsAdditive: 0
     Ease: 1
-    Curve:
+    CurveForward:
       serializedVersion: 2
       m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Animation:
+      AnimationForward:
+        Ease: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+      RewindIsDifferent: 0
+      AnimationRewind:
+        Ease: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
     Vector:
-      FromIsDifferentThanCurrent: 1
+      FromIsDifferentThanCurrent: 0
       From: {x: 0, y: 90, z: 0}
       To: {x: 0, y: 0, z: 0}
     Quaternion:
@@ -732,12 +768,30 @@ MonoBehaviour:
     Duration: 2
     IsAdditive: 1
     Ease: 26
-    Curve:
+    CurveForward:
       serializedVersion: 2
       m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Animation:
+      AnimationForward:
+        Ease: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+      RewindIsDifferent: 1
+      AnimationRewind:
+        Ease: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
     Vector:
       FromIsDifferentThanCurrent: 0
       From: {x: 0, y: 0, z: 0}
@@ -758,14 +812,78 @@ MonoBehaviour:
     Type: 0
     Delay: 2
     Duration: 2
-    IsAdditive: 1
-    Ease: 26
-    Curve:
+    IsAdditive: 0
+    Ease: 18
+    CurveForward:
       serializedVersion: 2
       m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Animation:
+      AnimationForward:
+        Ease: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+      RewindIsDifferent: 1
+      AnimationRewind:
+        Ease: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+    Vector:
+      FromIsDifferentThanCurrent: 0
+      From: {x: 0, y: 0, z: 0}
+      To: {x: -2, y: 0, z: 0}
+    Quaternion:
+      FromIsDifferentThanCurrent: 0
+      From: {x: 0, y: 0, z: 0, w: 0}
+      To: {x: 0, y: 0, z: 0, w: 0}
+    Color:
+      FromIsDifferentThanCurrent: 0
+      From: {r: 0, g: 0, b: 0, a: 0}
+      To: {r: 0, g: 0, b: 0, a: 0}
+    Float:
+      FromIsDifferentThanCurrent: 0
+      From: 0
+      To: 0
+  - Target: {fileID: 1271638821}
+    Type: 0
+    Delay: 2
+    Duration: 2
+    IsAdditive: 0
+    Ease: 18
+    CurveForward:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Animation:
+      AnimationForward:
+        Ease: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+      RewindIsDifferent: 1
+      AnimationRewind:
+        Ease: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
     Vector:
       FromIsDifferentThanCurrent: 0
       From: {x: 0, y: 0, z: 0}
@@ -990,12 +1108,30 @@ MonoBehaviour:
     Duration: 2
     IsAdditive: 0
     Ease: 25
-    Curve:
+    CurveForward:
       serializedVersion: 2
       m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Animation:
+      AnimationForward:
+        Ease: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+      RewindIsDifferent: 0
+      AnimationRewind:
+        Ease: 0
+        Curve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
     Vector:
       FromIsDifferentThanCurrent: 0
       From: {x: 0, y: 0, z: 0}
