@@ -17,7 +17,7 @@ namespace UnityTweenEditor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             float height = 0.0f;
-            float labelWidth = 200.0f;
+            float labelWidth = 100.0f;
 
             EditorGUI.BeginProperty(position, label, property);
             {

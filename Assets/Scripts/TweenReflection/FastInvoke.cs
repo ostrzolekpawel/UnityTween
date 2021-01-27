@@ -51,7 +51,7 @@ namespace UnityTweenReflection
                 default:
                     throw new ArgumentException
                     (
-                     "Input MemberInfo must be if type EventInfo, FieldInfo, MethodInfo, or PropertyInfo"
+                     "Input MemberInfo must be of type EventInfo, FieldInfo, MethodInfo, or PropertyInfo"
                     );
             }
         }

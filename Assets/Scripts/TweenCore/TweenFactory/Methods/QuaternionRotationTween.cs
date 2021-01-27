@@ -5,7 +5,7 @@
         public override Tween CreateTween(TweenOptions data)
         {
             if (data.Target.transform == null) return null;
-            bool curveExist = (data.Ease == Ease.Custom) && data.CurveForward.length >= 2;
+            bool curveExist = (data.Ease == Ease.Custom) && data.Curve.length >= 2;
 
             var tween = new UnityTweenRotateQuaternion(data.Target.transform, data.Quaternion.To, data.IsAdditive);
             if (data.Quaternion.FromIsDifferentThanCurrent)
@@ -13,7 +13,7 @@
 
             tween.SetDelay(data.Delay).SetDuration(data.Duration);
 
-            if (curveExist) tween.SetForwardEase(data.CurveForward);
+            if (curveExist) tween.SetForwardEase(data.Curve);
             else tween.SetForwardEase(data.Ease);
 
             return tween;

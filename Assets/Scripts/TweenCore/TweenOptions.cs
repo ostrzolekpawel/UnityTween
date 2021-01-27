@@ -13,7 +13,7 @@ namespace UnityTween
         public bool IsAdditive;
 
         public Ease Ease;
-        public AnimationCurve CurveForward;
+        public AnimationCurve Curve;
 
         public AnimationData Animation;
 
