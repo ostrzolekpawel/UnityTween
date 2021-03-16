@@ -10,11 +10,19 @@ namespace Assets.Scripts.Editor
     [CustomPropertyDrawer(typeof(GameObjectHolder))]
     public class GameObjectHolderDrawer : PropertyDrawer
     {
+        private readonly Dictionary<AnimationType, Type> _animationTypes = new Dictionary<AnimationType, Type>()
+        {
+            [AnimationType.Float] = typeof(float),
+            [AnimationType.Vector2] = typeof(Vector2),
+            [AnimationType.Vector3] = typeof(Vector3),
+            [AnimationType.Quaternion] = typeof(Quaternion)
+        };
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return (20 - EditorGUIUtility.singleLineHeight) + (EditorGUIUtility.singleLineHeight * 2);
+            return (20 - EditorGUIUtility.singleLineHeight) + (EditorGUIUtility.singleLineHeight * 3);
         }
-
+        private string selectedField = "";
+        private AnimationType _currentAnimationType;
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             float height = 0.0f;
@@ -22,11 +30,21 @@ namespace Assets.Scripts.Editor
 
             EditorGUI.BeginProperty(position, label, property);
             {
-                DrawField("Type: ", position, height, property.FindPropertyRelative("Target"));
+                DrawField("Target: ", position, height, property.FindPropertyRelative("Target"));
                 height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                GameObject tagret = property.FindPropertyRelative("Target").objectReferenceValue as GameObject;
+                DrawField("Type: ", position, height, property.FindPropertyRelative("Type"));
+                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
-                if (GUI.Button(new Rect(10, 70, 50, 30), "Click"))
+                GameObject tagret = property.FindPropertyRelative("Target").objectReferenceValue as GameObject;
+                AnimationType animType = (AnimationType)property.FindPropertyRelative("Type").intValue;
+                
+                if (animType != _currentAnimationType)
+                {
+                    _currentAnimationType = animType;
+                    selectedField = "";
+                }
+
+                if (GUI.Button(new Rect(position.x, position.y + height, 30, EditorGUIUtility.singleLineHeight), ">"))
                 {
                     var components = tagret.GetComponents<Component>();
                     GenericMenu menu = new GenericMenu();
@@ -40,12 +58,12 @@ namespace Assets.Scripts.Editor
                         var fields = type.GetFields(flags);
                         foreach (var p in properties)
                         {
-                            if (p.PropertyType == typeof(Vector3))
+                            if (p.PropertyType == _animationTypes[animType])
                                 allProperties.Add((type, p));
                         }
                         foreach (var f in fields)
                         {
-                            if (f.FieldType == typeof(Vector3))
+                            if (f.FieldType == _animationTypes[animType])
                                 allFields.Add((type, f));
                         }
                     }
@@ -54,6 +72,7 @@ namespace Assets.Scripts.Editor
                     {
                         menu.AddItem(new GUIContent($"{f.Item1}/{f.Item2}"), false, (a) =>
                         {
+                            selectedField = f.Item2.ToString();
                             Debug.Log($"you picked: {f.Item2} from {f.Item1}");
                         }, f);
                     }
@@ -62,22 +81,17 @@ namespace Assets.Scripts.Editor
                     {
                         menu.AddItem(new GUIContent($"{f.Item1}/{f.Item2}"), false, (a) =>
                         {
+                            selectedField = f.Item2.ToString();
                             Debug.Log($"you picked: {f.Item2} from {f.Item1}");
                         }, f);
                     }
                     menu.DropDown(position);
                 }
+
+                EditorGUI.LabelField(new Rect(position.x + labelWidth, position.y + height, position.width - labelWidth, EditorGUIUtility.singleLineHeight), selectedField);
             }
             EditorGUI.EndProperty();
         }
-
-        private GenericMenu.MenuFunction2 DisplayType(object parametr)
-        {
-            Debug.Log($"{parametr}");
-            return null;
-        }
-
-
 
         private void DrawField(string name, Rect position, float height, SerializedProperty serializedProperty)
         {
