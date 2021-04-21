@@ -66,38 +66,12 @@ namespace UnityTweenEditor
                 if (GUILayout.Button("Load Tweens"))
                     _tweenBuilder.LoadTweens();
 
-            //if (_tweenBuilder.IsInit)
-            //{
-            //    GUILayout.BeginHorizontal();
-            //    if (GUILayout.Button("Play Forward"))
-            //    {
-            //        _tweenBuilder.PlayForward();
-            //    }
-            //    if (GUILayout.Button("Play Rewind"))
-            //    {
-            //        _tweenBuilder.PlayRewind();
-            //    }
-            //    GUILayout.EndHorizontal();
-
-            //    GUILayout.BeginHorizontal();
-            //    if (GUILayout.Button("Play"))
-            //    {
-            //        _tweenBuilder.Play();
-            //    }
-            //    if (GUILayout.Button("Pause"))
-            //    {
-            //        _tweenBuilder.Stop();
-            //    }
-            //    GUILayout.EndHorizontal();
-            //}
-
             _list.DoLayoutList();
             serializedObject.ApplyModifiedProperties();
 
             if (GUI.changed)
             {
                 EditorUtility.SetDirty(_tweenBuilder);
-                //EditorSceneManager.MarkSceneDirty(castedTarget.gameObject.scene);
             }
         }
     }

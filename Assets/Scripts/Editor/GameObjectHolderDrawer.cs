@@ -19,9 +19,10 @@ namespace Assets.Scripts.Editor
         };
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return (20 - EditorGUIUtility.singleLineHeight) + (EditorGUIUtility.singleLineHeight * 3);
+            return (20 - EditorGUIUtility.singleLineHeight) + (EditorGUIUtility.singleLineHeight * 4);
         }
         private string selectedField = "";
+        private string selectedType ="";
         private AnimationType _currentAnimationType;
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -72,6 +73,7 @@ namespace Assets.Scripts.Editor
                     {
                         menu.AddItem(new GUIContent($"{f.Item1}/{f.Item2}"), false, (a) =>
                         {
+                            selectedType = f.Item1.ToString();
                             selectedField = f.Item2.ToString();
                             Debug.Log($"you picked: {f.Item2} from {f.Item1}");
                         }, f);
@@ -81,6 +83,7 @@ namespace Assets.Scripts.Editor
                     {
                         menu.AddItem(new GUIContent($"{f.Item1}/{f.Item2}"), false, (a) =>
                         {
+                            selectedType = f.Item1.ToString();
                             selectedField = f.Item2.ToString();
                             Debug.Log($"you picked: {f.Item2} from {f.Item1}");
                         }, f);
@@ -89,6 +92,8 @@ namespace Assets.Scripts.Editor
                 }
 
                 EditorGUI.LabelField(new Rect(position.x + labelWidth, position.y + height, position.width - labelWidth, EditorGUIUtility.singleLineHeight), selectedField);
+                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                EditorGUI.LabelField(new Rect(position.x + labelWidth, position.y + height, position.width - labelWidth, EditorGUIUtility.singleLineHeight), selectedType);
             }
             EditorGUI.EndProperty();
         }

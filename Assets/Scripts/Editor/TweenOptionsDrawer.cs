@@ -20,7 +20,7 @@ namespace UnityTweenEditor
 
             EditorGUI.BeginProperty(position, label, property);
             {
-                DrawField("Type: ", position, height, property.FindPropertyRelative("Type"));
+                DrawField("Type: ", position, height, property.FindPropertyRelative("AnimationType"));
                 height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
                 DrawField("Target: ", position, height, property.FindPropertyRelative("Target"));
@@ -35,7 +35,7 @@ namespace UnityTweenEditor
                 DrawField("Is Additive: ", position, height, property.FindPropertyRelative("IsAdditive"));
                 height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
-                var type = (AnimationType)property.FindPropertyRelative("Type").intValue;
+                var type = (AnimationType)property.FindPropertyRelative("AnimationType").intValue;
 
                 DrawField("Ease: ", position, height, property.FindPropertyRelative("Ease"));
                 height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;

@@ -4,8 +4,8 @@ namespace UnityTween.TweenFactory
 {
     public static class TweenFactoryCreator
     {
-        private static readonly Dictionary<AnimationType, TweenFactory> _tweens =
-            new Dictionary<AnimationType, TweenFactory>()
+        private static readonly Dictionary<AnimationType, ITweenFactory> _tweens =
+            new Dictionary<AnimationType, ITweenFactory>()
             {
                 [AnimationType.Position] = new PositionTween(),
                 [AnimationType.AnchoredPosition] = new AnchoredPositionTween(),

@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityTween;
 
-namespace UnityTweenReflection
+namespace UnityTweenReflection.Generic
 {
     public class UnityTweenFloat<T> : Tween<T, float> where T : UnityEngine.Object
     {

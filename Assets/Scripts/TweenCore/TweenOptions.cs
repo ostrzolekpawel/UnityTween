@@ -7,7 +7,30 @@ namespace UnityTween
     public class TweenOptions // tween options
     {
         public GameObject Target;
-        public AnimationType Type;
+        public AnimationType AnimationType;
+        public float Delay;
+        public float Duration;
+        public bool IsAdditive;
+
+        public Ease Ease;
+        public AnimationCurve Curve;
+
+        public AnimationData Animation;
+
+        public VectorTweenData Vector = new VectorTweenData();
+        public QuaternionTweenData Quaternion = new QuaternionTweenData();
+        public ColorTweenData Color = new ColorTweenData();
+        public FloatTweenData Float = new FloatTweenData();
+    }
+
+    [Serializable]
+    public class TweenOptionsReflection
+    {
+        public AnimationTypeReflection AnimationType;
+        public GameObject Target;
+        public Type Type;
+        public string Field;
+
         public float Delay;
         public float Duration;
         public bool IsAdditive;

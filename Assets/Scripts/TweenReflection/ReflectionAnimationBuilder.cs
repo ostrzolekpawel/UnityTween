@@ -23,7 +23,7 @@ namespace UnityTween
         [SerializeField] [HideInInspector] public bool PlayOnStart;
         [SerializeField] [HideInInspector] public bool LoadOnStart = true;
 
-        [SerializeField] private List<TweenOptions> _tweenDatas = new List<TweenOptions>();
+        [SerializeField] private List<TweenOptionsReflection> _tweenDatas = new List<TweenOptionsReflection>();
         private List<Tween> _tweens = new List<Tween>();
 
         private TweenCore _tweenCore = null;
@@ -65,9 +65,10 @@ namespace UnityTween
             _tweens.Add(tween);
         }
 
-        public void AddTween(TweenOptions data)
+        public void AddTween(TweenOptionsReflection data)
         {
-            var tween = TweenFactoryCreator.CreateTween(data.Type, data);
+            //var tween = TweenFactoryCreator.CreateTween(data.AnimationType, data);
+            var tween = TweenReflectionFactoryCreator.CreateTween(AnimationTypeReflection.Vector3, null);
             AddTween(tween);
         }
 

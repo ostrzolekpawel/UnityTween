@@ -1,4 +1,6 @@
-﻿namespace UnityTween
+﻿using System;
+
+namespace UnityTween
 {
     public enum AnimationType
     {
@@ -12,5 +14,14 @@
         SizeDelta,
         TextColor,
         TextSize
+    }
+
+    [Serializable]
+    public enum AnimationTypeReflection
+    {
+        Float,
+        Vector2,
+        Vector3,
+        Quaternion
     }
 }

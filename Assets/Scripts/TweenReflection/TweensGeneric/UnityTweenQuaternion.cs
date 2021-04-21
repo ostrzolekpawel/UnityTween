@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityTween;
 
-namespace UnityTweenReflection
+namespace UnityTweenReflection.Generic
 {
     public class UnityTweenQuaternion<T> : Tween<T, Quaternion> where T : UnityEngine.Object
     {

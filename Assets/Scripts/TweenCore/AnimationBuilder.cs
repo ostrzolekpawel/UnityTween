@@ -67,7 +67,7 @@ namespace UnityTween
 
         public void AddTween(TweenOptions data)
         {
-            var tween = TweenFactoryCreator.CreateTween(data.Type, data);
+            var tween = TweenFactoryCreator.CreateTween(data.AnimationType, data);
             AddTween(tween);
         }
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityTween;
+using UnityTweenReflection.Generic;
 
 namespace UnityTweenReflection
 {

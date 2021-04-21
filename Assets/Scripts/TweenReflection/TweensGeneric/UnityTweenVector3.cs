@@ -3,12 +3,16 @@ using System.Reflection;
 using UnityEngine;
 using UnityTween;
 
-namespace UnityTweenReflection
+namespace UnityTweenReflection.Generic
 {
     public class UnityTweenVector3<T> : Tween<T, Vector3> where T : UnityEngine.Object
     {
-        private Action<T, object> _setter;
-        private Func<T, object> _getter;
+        private Action<T, object> _setterField;
+        private Func<T, object> _getterField;
+
+
+        private Action<T, object> _setterReference;
+        private Func<T, object> _getterReference;
 
         public UnityTweenVector3(T reference, string fieldName, Vector3 endValue, bool isAdditive = false)
         {
@@ -20,24 +24,29 @@ namespace UnityTweenReflection
             if (fieldInfo == null)
                 throw new Exception($"Can't find field \"{fieldName}\" in type \"{reference.GetType()}\"");
 
-            _getter = FastInvoke.BuildUntypedGetter<T>(fieldInfo);
-            _setter = FastInvoke.BuildUntypedSetter<T>(fieldInfo);
+            _getterField = FastInvoke.BuildUntypedGetter<T>(fieldInfo);
+            _setterField = FastInvoke.BuildUntypedSetter<T>(fieldInfo);
 
-            _from = (Vector3)_getter(_componentToAnimate);
+            _from = (Vector3)_getterField(_componentToAnimate);
             _to = isAdditive ? _from + endValue : endValue;
 
             OnEvaluate += (time) =>
             {
                 var value = Vector3.Lerp(_from, _to, CurrentEaseMethod(time));
-                _setter(_componentToAnimate, value);
+                _setterField(_componentToAnimate, value);
             };
 
             OnEvaluateComplete += (x) =>
             {
-                _setter(_componentToAnimate, x);
+                _setterField(_componentToAnimate, x);
             };
 
             ValueOnBegin += () => _from;
+        }
+
+        public UnityTweenVector3(GameObject reference, Type referenceType, string fieldName, Vector3 endValue, bool isAdditive = false)
+        {
+            
         }
     }
 }
