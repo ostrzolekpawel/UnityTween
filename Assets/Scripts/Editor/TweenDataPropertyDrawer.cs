@@ -7,34 +7,51 @@ namespace UnityTweenEditor
 {
     public class TweenDataPropertyDrawer : PropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        private float _height;
+        private float _labelWidth = 50;
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-
-            float height = 0.0f;
-
-            EditorGUI.BeginProperty(position, label, property);
-            {
-                var fromIsDifferent = property.FindPropertyRelative("FromIsDifferentThanCurrent").boolValue;
-                DrawField("From Is Different: ", position, height, property.FindPropertyRelative("FromIsDifferentThanCurrent"));
-                if (fromIsDifferent)
-                {
-                    height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                    DrawField("From: ", position, height, property.FindPropertyRelative("From"));
-                }
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                DrawField("To: ", position, height, property.FindPropertyRelative("To"));
-
-            }
-            EditorGUI.EndProperty();
+            return _height;
+            //return property.isExpanded ? _height : EditorGUIUtility.singleLineHeight;
         }
 
-        private void DrawField(string name, Rect position, float height, SerializedProperty serializedProperty)
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            float labelWidth = 100.0f;
-            EditorGUI.LabelField(new Rect(position.x, position.y + height, labelWidth, EditorGUIUtility.singleLineHeight), name);
+            position.height = EditorGUIUtility.singleLineHeight;
+            _height = EditorGUIUtility.singleLineHeight;
+            //property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, label);
+
+            //if (property.isExpanded)
+            //{
+                EditorGUI.BeginProperty(position, label, property);
+                {
+                    var fromIsDifferent = property.FindPropertyRelative("FromIsDifferentThanCurrent").boolValue;
+                    DrawField("From Is Different: ", position, _labelWidth, property.FindPropertyRelative("FromIsDifferentThanCurrent"));
+                    if (fromIsDifferent)
+                    {
+                        DrawField("From: ", position, _labelWidth, property.FindPropertyRelative("From"));
+                    }
+                    DrawField("To: ", position, _labelWidth, property.FindPropertyRelative("To"));
+
+                }
+                EditorGUI.EndProperty();
+            //}
+        }
+
+        private void DrawField(string name, Rect position, SerializedProperty serializedProperty)
+        {
+            float labelWidth = EditorGUIUtility.labelWidth / 2;
+            DrawField(name, position, labelWidth, serializedProperty);
+        }
+
+        private void DrawField(string name, Rect position, float labelWidth, SerializedProperty serializedProperty)
+        {
+            EditorGUI.LabelField(new Rect(position.x + 10, position.y + _height, labelWidth + 10, EditorGUIUtility.singleLineHeight), name);
             EditorGUI.PropertyField(
-                new Rect(position.x + labelWidth, position.y + height, position.width - labelWidth, EditorGUIUtility.singleLineHeight),
+                new Rect(position.x + labelWidth * 2, position.y + _height, position.width - labelWidth, EditorGUIUtility.singleLineHeight),
                 serializedProperty, GUIContent.none);
+            _height += EditorGUI.GetPropertyHeight(serializedProperty, true);
         }
     }
 

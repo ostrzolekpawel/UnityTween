@@ -91,9 +91,9 @@ namespace Assets.Scripts.Editor
                     menu.DropDown(position);
                 }
 
-                EditorGUI.LabelField(new Rect(position.x + labelWidth, position.y + height, position.width - labelWidth, EditorGUIUtility.singleLineHeight), selectedField);
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
                 EditorGUI.LabelField(new Rect(position.x + labelWidth, position.y + height, position.width - labelWidth, EditorGUIUtility.singleLineHeight), selectedType);
+                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+                EditorGUI.LabelField(new Rect(position.x + labelWidth, position.y + height, position.width - labelWidth, EditorGUIUtility.singleLineHeight), selectedField);
             }
             EditorGUI.EndProperty();
         }

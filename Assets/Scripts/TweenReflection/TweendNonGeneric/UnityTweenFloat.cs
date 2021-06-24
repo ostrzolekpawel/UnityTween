@@ -3,26 +3,27 @@ using System.Reflection;
 using UnityEngine;
 using UnityTween;
 
-namespace UnityTweenReflection.Generic
+namespace UnityTweenReflection
 {
-    public class UnityTweenFloat<T> : Tween<T, float> //where T : UnityEngine.Object
+    public class UnityTweenFloat : Tween<object, float>
     {
-        private Action<T, object> _setter;
-        private Func<T, object> _getter;
+        private Action<object, object> _setter;
+        private Func<object, object> _getter;
 
-        public UnityTweenFloat(T reference, string fieldName, float endValue, bool isAdditive = false)
+        public UnityTweenFloat(object reference, string typeName, string fieldName, float endValue, bool isAdditive = false)
         {
             _componentToAnimate = reference;
-            MemberInfo fieldInfo = typeof(T).GetProperty(fieldName);
+            Type type = Type.GetType(typeName);
+            MemberInfo fieldInfo = type.GetProperty(fieldName);
 
             if (fieldInfo == null)
-                fieldInfo = typeof(T).GetField(fieldName);
+                fieldInfo = type.GetField(fieldName);
 
             if (fieldInfo == null)
                 throw new Exception($"Can't find field or property \"{fieldName}\" in type \"{reference.GetType()}\"");
 
-            _getter = FastInvoke.BuildUntypedGetter<T>(fieldInfo);
-            _setter = FastInvoke.BuildUntypedSetter<T>(fieldInfo);
+            _getter = FastInvoke.BuildUntypedGetter<object>(fieldInfo);
+            _setter = FastInvoke.BuildUntypedSetter<object>(fieldInfo);
 
             _from = (float)_getter(_componentToAnimate);
             _to = isAdditive ? _from + endValue : endValue;

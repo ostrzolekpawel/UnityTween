@@ -202,7 +202,7 @@ namespace UnityTween
         //public abstract V EvaluateValue(float t);
     }
 
-    public abstract class Tween<T, V> : Tween<V> where T : UnityEngine.Object
+    public abstract class Tween<T, V> : Tween<V> //where T : UnityEngine.Object
     {
         protected T _componentToAnimate; // wstapnie niech bedzie tylko component
 

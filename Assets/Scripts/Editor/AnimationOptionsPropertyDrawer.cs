@@ -9,44 +9,69 @@ namespace UnityTweenEditor
     [CustomPropertyDrawer(typeof(AnimationOptions))]
     public class AnimationOptionsPropertyDrawer : PropertyDrawer
     {
+        private float _height;
+        private float _labelWidth = 50;
+
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return (20 - EditorGUIUtility.singleLineHeight) + (EditorGUIUtility.singleLineHeight * 2); //9
+            return _height;
+            //return property.isExpanded ? _height : EditorGUIUtility.singleLineHeight;
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            float height = 0.0f;
-            float labelWidth = 100.0f;
+            position.height = EditorGUIUtility.singleLineHeight;
+            _height = EditorGUIUtility.singleLineHeight;
+            //property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, label);
 
-            EditorGUI.BeginProperty(position, label, property);
-            {
-                DrawField("Ease: ", position, height, property.FindPropertyRelative("Ease"));
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
+            //if (property.isExpanded)
+            //{
+                EditorGUI.BeginProperty(position, label, property);
+                {
+                    DrawField("Ease: ", position, _labelWidth, property.FindPropertyRelative("Ease"));
 
-                var ease = (Ease)property.FindPropertyRelative("Ease").intValue;
-                var curve = CreateCurveFromEase(ease);
-                if (ease == Ease.Custom) // 
-                {
-                    DrawField("Curve: ", position, height, property.FindPropertyRelative("Curve"));
+                    var ease = (Ease)property.FindPropertyRelative("Ease").intValue;
+                    var curve = CreateCurveFromEase(ease);
+                    if (ease == Ease.Custom) // 
+                    {
+                        DrawField("Curve: ", position, _labelWidth, property.FindPropertyRelative("Curve"));
+                    }
+                    else
+                    {
+                        DrawCurveField("Curve: ", position, _labelWidth, curve);
+                    }
                 }
-                else
-                {
-                    //height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                    EditorGUI.LabelField(new Rect(position.x, position.y + height, labelWidth, EditorGUIUtility.singleLineHeight), "Curve: ");
-                    EditorGUI.CurveField(new Rect(position.x + labelWidth, position.y + height, position.width - labelWidth, EditorGUIUtility.singleLineHeight), curve);
-                }
-            }
-            EditorGUI.EndProperty();
+                EditorGUI.EndProperty();
+            //}
         }
 
-        private void DrawField(string name, Rect position, float height, SerializedProperty serializedProperty)
+        private void DrawField(string name, Rect position, SerializedProperty serializedProperty)
         {
-            float labelWidth = 100.0f;
-            EditorGUI.LabelField(new Rect(position.x, position.y + height, labelWidth, EditorGUIUtility.singleLineHeight), name);
+            float labelWidth = EditorGUIUtility.labelWidth / 2;
+            DrawField(name, position, labelWidth, serializedProperty);
+        }
+
+        private void DrawField(string name, Rect position, float labelWidth, SerializedProperty serializedProperty)
+        {
+            EditorGUI.LabelField(new Rect(position.x + 10, position.y + _height, labelWidth + 10, EditorGUIUtility.singleLineHeight), name);
             EditorGUI.PropertyField(
-                new Rect(position.x + labelWidth, position.y + height, position.width - labelWidth, EditorGUIUtility.singleLineHeight),
+                new Rect(position.x + labelWidth * 2, position.y + _height, position.width - labelWidth, EditorGUIUtility.singleLineHeight),
                 serializedProperty, GUIContent.none);
+            _height += EditorGUI.GetPropertyHeight(serializedProperty, true);
+        }
+
+        private void DrawCurveField(string name, Rect position, AnimationCurve serializedProperty)
+        {
+            float labelWidth = EditorGUIUtility.labelWidth / 2;
+            DrawCurveField(name, position, labelWidth, serializedProperty);
+        }
+        private void DrawCurveField(string name, Rect position, float labelWidth, AnimationCurve serializedProperty)
+        {
+            EditorGUI.LabelField(new Rect(position.x + 10, position.y + _height, labelWidth + 10, EditorGUIUtility.singleLineHeight), name);
+            EditorGUI.CurveField(
+                new Rect(position.x + labelWidth * 2, position.y + _height, position.width - labelWidth, EditorGUIUtility.singleLineHeight),
+                serializedProperty);
+            _height += EditorGUIUtility.singleLineHeight;
         }
 
 

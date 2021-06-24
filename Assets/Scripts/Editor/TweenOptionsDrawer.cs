@@ -8,77 +8,67 @@ namespace UnityTweenEditor
     [CustomPropertyDrawer(typeof(TweenOptions))]
     public class TweenOptionsDrawer : PropertyDrawer
     {
+        private float _height;
+        private float _labelWidth = 50;
+
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return (20 - EditorGUIUtility.singleLineHeight) + (EditorGUIUtility.singleLineHeight * 14); //9
+            return property.isExpanded ? _height : EditorGUIUtility.singleLineHeight;
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            float height = 0.0f;
-            float labelWidth = 100.0f;
+            position.height = EditorGUIUtility.singleLineHeight;
+            _height = EditorGUIUtility.singleLineHeight;
+            property.isExpanded = EditorGUI.Foldout(position, property.isExpanded, label);
 
-            EditorGUI.BeginProperty(position, label, property);
+            if (property.isExpanded)
             {
-                DrawField("Type: ", position, height, property.FindPropertyRelative("AnimationType"));
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
-                DrawField("Target: ", position, height, property.FindPropertyRelative("Target"));
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
-                DrawField("Delay: ", position, height, property.FindPropertyRelative("Delay"));
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
-                DrawField("Duration: ", position, height, property.FindPropertyRelative("Duration"));
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
-                DrawField("Is Additive: ", position, height, property.FindPropertyRelative("IsAdditive"));
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
-                var type = (AnimationType)property.FindPropertyRelative("AnimationType").intValue;
-
-                DrawField("Ease: ", position, height, property.FindPropertyRelative("Ease"));
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
-                var ease = (Ease)property.FindPropertyRelative("Ease").intValue;
-                var curve = CreateCurveFromEase(ease);
-                if (ease == Ease.Custom)
+                EditorGUI.BeginProperty(position, label, property);
                 {
-                    DrawField("Curve: ", position, height, property.FindPropertyRelative("Curve"));
-                }
-                else
-                {
-                    EditorGUI.LabelField(new Rect(position.x, position.y + height, labelWidth, EditorGUIUtility.singleLineHeight), "Curve: ");
-                    EditorGUI.CurveField(new Rect(position.x + labelWidth, position.y + height, position.width - labelWidth, EditorGUIUtility.singleLineHeight), curve);
-                }
+                    DrawField("Type: ", position, _labelWidth, property.FindPropertyRelative("AnimationType"));
+                    DrawField("Target: ", position, _labelWidth, property.FindPropertyRelative("Target"));
+                    DrawField("Delay: ", position, _labelWidth, property.FindPropertyRelative("Delay"));
+                    DrawField("Duration: ", position, _labelWidth, property.FindPropertyRelative("Duration"));
+                    DrawField("Is Additive: ", position, _labelWidth, property.FindPropertyRelative("IsAdditive"));
 
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                if (IsVectorType(type))
-                {
-                    DrawField("Vector: ", position, height, property.FindPropertyRelative("Vector"));
+                    var type = (AnimationType)property.FindPropertyRelative("AnimationType").intValue;
+
+                    DrawField("Ease: ", position, _labelWidth, property.FindPropertyRelative("Ease"));
+
+                    var ease = (Ease)property.FindPropertyRelative("Ease").intValue;
+                    var curve = CreateCurveFromEase(ease);
+                    if (ease == Ease.Custom)
+                    {
+                        DrawField("Curve: ", position, _labelWidth, property.FindPropertyRelative("Curve"));
+                    }
+                    else
+                    {
+                        DrawCurveField("Curve", position, _labelWidth, curve);
+                    }
+
+                    if (IsVectorType(type))
+                    {
+                        DrawField("Vector: ", position, _labelWidth, property.FindPropertyRelative("Vector"));
+                    }
+                    else if (IsColorType(type))
+                    {
+                        DrawField("Color: ", position, _labelWidth, property.FindPropertyRelative("Color"));
+                    }
+                    else if (type == AnimationType.QuaternionRotation)
+                    {
+                        DrawField("Quaternion: ", position, _labelWidth, property.FindPropertyRelative("Quaternion"));
+                    }
+                    else if (type == AnimationType.TextSize)
+                    {
+                        DrawField("Float: ", position, _labelWidth, property.FindPropertyRelative("Float"));
+                    }
+
+                    DrawField("Animation: ", position, _labelWidth, property.FindPropertyRelative("Animation"));
 
                 }
-                else if (IsColorType(type))
-                {
-                    DrawField("Color: ", position, height, property.FindPropertyRelative("Color"));
-                }
-                else if (type == AnimationType.QuaternionRotation)
-                {
-                    DrawField("Quaternion: ", position, height, property.FindPropertyRelative("Quaternion"));
-                }
-                else if (type == AnimationType.TextSize)
-                {
-                    DrawField("Float: ", position, height, property.FindPropertyRelative("Float"));
-                }
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-                //height += EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
-
-                DrawField("Animation: ", position, height, property.FindPropertyRelative("Animation"));
-
+                EditorGUI.EndProperty();
             }
-            EditorGUI.EndProperty();
         }
 
         private static bool IsColorType(AnimationType type)
@@ -97,13 +87,33 @@ namespace UnityTweenEditor
                                 type == AnimationType.SizeDelta;
         }
 
-        private void DrawField(string name, Rect position, float height, SerializedProperty serializedProperty)
+        private void DrawField(string name, Rect position, SerializedProperty serializedProperty)
         {
-            float labelWidth = 100.0f;
-            EditorGUI.LabelField(new Rect(position.x, position.y + height, labelWidth, EditorGUIUtility.singleLineHeight), name);
+            float labelWidth = EditorGUIUtility.labelWidth / 2;
+            DrawField(name, position, labelWidth, serializedProperty);
+        }
+
+        private void DrawField(string name, Rect position, float labelWidth, SerializedProperty serializedProperty)
+        {
+            EditorGUI.LabelField(new Rect(position.x + 10, position.y + _height, labelWidth + 10, EditorGUIUtility.singleLineHeight), name);
             EditorGUI.PropertyField(
-                new Rect(position.x + labelWidth, position.y + height, position.width - labelWidth, EditorGUIUtility.singleLineHeight),
+                new Rect(position.x + labelWidth * 2, position.y + _height, position.width - labelWidth, EditorGUIUtility.singleLineHeight),
                 serializedProperty, GUIContent.none);
+            _height += EditorGUI.GetPropertyHeight(serializedProperty, true);
+        }
+
+        private void DrawCurveField(string name, Rect position, AnimationCurve serializedProperty)
+        {
+            float labelWidth = EditorGUIUtility.labelWidth / 2;
+            DrawCurveField(name, position, labelWidth, serializedProperty);
+        }
+        private void DrawCurveField(string name, Rect position, float labelWidth, AnimationCurve serializedProperty)
+        {
+            EditorGUI.LabelField(new Rect(position.x + 10, position.y + _height, labelWidth + 10, EditorGUIUtility.singleLineHeight), name);
+            EditorGUI.CurveField(
+                new Rect(position.x + labelWidth * 2, position.y + _height, position.width - labelWidth, EditorGUIUtility.singleLineHeight),
+                serializedProperty);
+            _height += EditorGUIUtility.singleLineHeight;
         }
 
         private Func<float, float> CurveFunction = null;

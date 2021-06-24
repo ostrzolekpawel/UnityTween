@@ -49,6 +49,8 @@ namespace UnityTweenEditor
             float propertyHeight =
                 EditorGUI.GetPropertyHeight(_list.serializedProperty.GetArrayElementAtIndex(index), true);
 
+            Debug.Log($"idx: {index}, height: {propertyHeight}");
+
             //float spacing = EditorGUIUtility.singleLineHeight / 2;
             float spacing = EditorGUIUtility.singleLineHeight * 3;
             return propertyHeight + spacing;
@@ -75,7 +77,5 @@ namespace UnityTweenEditor
             }
         }
     }
-
-
 } 
 #endif
